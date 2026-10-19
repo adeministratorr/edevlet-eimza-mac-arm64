@@ -20,6 +20,7 @@ e-Devlet E-İmza'yı (Türksat, resmî `elektronik-imza.jar`) **MacBook, MacBook
 - **MacBook / MacBook Pro / MacBook Air / iMac / Mac mini'de çalışır mı?** Evet — Apple Silicon (M1/M2/M3/M4) tüm modeller destekli. Intel Mac desteklenmez.
 - **Rosetta veya Java kurmam gerekir mi?** Hayır; paket ARM native (arm64) ve Java uygulamaya gömülüdür.
 - **İmza için ek olarak ne gerekir?** e-imza kartı + kart okuyucu + **arm64 AKİS sürücüsü** (aşağıda).
+- **macOS 28 / Rosetta uyarısı alırsam?** Uyarı e-Devlet uygulamasından değil, eski **Intel** AKİS paketinden (`/Applications/Akia.app`) gelir — çözüm aşağıdaki bölümde.
 
 ## Neden Mac'te çalışmıyordu? Nasıl çözdük?
 
@@ -55,11 +56,19 @@ Bu depo **Said Sürücü**'nün https://github.com/saidsurucu/edevlet-eimza-mac-
 - `scripts/build.sh > patch_jar`: patcher üstten hiç `.class` üretmediyse (`work/out` yok) bu, jar'ın **zaten uyumlu** olduğu anlamına gelir (Türksat jar'ı artık sürüm-uyumlu sınıflar içeriyor). Eski betik bu durumda `patcher hiç .class üretmedi` hatasıyla `all`'u hata veriyordu. Artık bu durumda patch atlanıp `javap` doğrulaması ile devam eder.
 - Standart `kur.sh` ve `scripts/build.sh` davranışları aynen korunur.
 
+## ⚠️ macOS 28 / Rosetta uyarısı alırsanız (eski Intel AKİS paketi)
+
+macOS, sistemde **eski Intel AKİS paketi** kuruluyken "bu uygulama Intel tabanlıdır; gelecek macOS sürümünde açılmayacak" uyarısı gösterir (Mac'lerde Rosetta desteği macOS 28'de kaldırılıyor). Uyarı e-imza uygulamalarından değil, AKİS'in Intel sürümünün kurduğu `/Applications/Akia.app`'ten gelir.
+
+- **Teşhis:** `lipo -archs /Applications/Akia.app/Contents/MacOS/Akia` → `x86_64` ise eski Intel paketi kurulu.
+- **Çözüm:** [TÜBİTAK'ın **Mac OS Arm (Apple Silicon)** paketini](https://akiskart.bilgem.tubitak.gov.tr/tr/destek/) kurun — yeni sürüm `Akia ARM.app` (arm64) olarak gelir. Eski `/Applications/Akia.app`'i Finder'da Çöp'e sürükleyin (Terminal'den: `sudo rm -rf /Applications/Akia.app && sudo pkgutil --forget tr.gov.tubitak.akia`).
+- **Kritik olan sürücüdür:** `lipo -archs /usr/local/lib/libakisp11.dylib` → `x86_64 arm64` (en az `arm64`) olmalı. E-imza akışları Akia.app'e **bağlı değildir**; kart erişimi bu dylib üzerinden yürür (gerçek kart + PIN ile doğrulandı).
+
 ## Gereksinimler
 
 - macOS Apple Silicon (arm64) — MacBook, MacBook Pro, MacBook Air, Mac mini, iMac
 - Komut satırı araçları (betik Xcode CLT kurulmasını kendisi ister)
-- TÜBİTAK AKİS sürücüsü — **Apple Silicon (Arm) paketi**: https://akiskart.bilgem.tubitak.gov.tr/tr/destek/
+- TÜBİTAK AKİS sürücüsü — **Apple Silicon (Arm) paketi** (Intel paketini kurmayın; bkz. yukarıdaki macOS 28 notu): https://akiskart.bilgem.tubitak.gov.tr/tr/destek/
 - e-imza kartı okuyucu + e-imza kartı
 
 ## Not
