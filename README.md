@@ -1,25 +1,27 @@
-# E-Devlet E-İmza — macOS Apple Silicon (M1/M2/M3/M4) Kurulumu (arm64)
+# Mac'tte e-Devlet e-imza kurulumu — Apple Silicon
 
-e-Devlet E-İmza'yı (Türksat, resmî `elektronik-imza.jar`) **MacBook, MacBook Pro, MacBook Air, Mac mini ve iMac**'de native çalıştırın. Apple Silicon (M serisi, ARM tabanlı işlemci) için arm64 `.app`; gömülü Java 11 — Rosetta gerekmez, ayrı Java kurulumu gerekmez.
+> **Kısa yanıt:** e-Devlet Kapısı'nda elektronik imzayla giriş yapmak veya belge imzalamak istiyor ancak Mac'inizde imza uygulaması açılmıyor mu? Bu proje, Türksat'ın resmî e-Devlet e-imza istemcisini (`elektronik-imza.jar`) **MacBook, MacBook Pro, MacBook Air, Mac mini ve iMac**'de (Apple Silicon / M serisi / ARM tabanlı işlemci) çalışacak şekilde paketler: gömülü arm64 Java 11, Rosetta veya ayrı Java kurulumu gerekmez. **Gayriresmî bir topluluk çalışmasıdır; e-Devlet Kapısı veya Türksat tarafından hazırlanmış/onaylanmış bir uygulama değildir.**
 
-**Kimler için:** e-Devlet'i e-imza ile kullanan tüm meslek grupları — avukatlar, mali müşavirler (SMMM/YMM), doktorlar ve sağlık profesyonelleri, mühendis ve mimarlar, eczacılar, gümrük müşavirleri, şirket yetkilileri (MERSİS), kamu çalışanları, EKAP/ihale kullanıcıları ve e-imza kartı olan tüm vatandaşlar.
+## İlk kez kuranlar için
+
+1. **Kart ve sürücü:** e-imza kartınızı, kart okuyucunuzu ve **arm64 AKİS sürücüsünü** hazırlayın: [akiskart.bilgem.tubitak.gov.tr/destek](https://akiskart.bilgem.tubitak.gov.tr/tr/destek/) → "Mac OS Arm (Apple Silicon)". Kontrol: `lipo -archs /usr/local/lib/libakisp11.dylib` çıktısı `arm64` içermeli.
+2. **En kolay kurulum:** [Releases](../../releases) sayfasındaki güncel `EdevletEimza-arm64-*.dmg` dosyasını indirip uygulamayı Applications'a sürükleyin. Homebrew isteğe bağlıdır: `brew install --cask adeministratorr/tap/edevlet-eimza`.
+3. **Başarılı kurulum nasıl anlaşılır?** Uygulamayı açtığınızda imza/PIN penceresi gelir; e-Devlet'teki imzalama akışı "imzalama aracı açık mı?" hatası vermeden ilerler.
+4. **Sık hata:** "Akıllı Kart Bulunamadı" → sürücü eksik veya Intel sürücü kurulu. Gatekeeper uyarısı → DMG notarize olduğu için normal açılır; kaynaktan derlenen `.app` ad-hoc imzalıdır, gerekirse sağ tık → **Aç**.
+5. **Önemli sınır:** Uygulama yalnızca **arm64** (Apple Silicon) içindir; Intel Mac desteklenmez. Bu depoda kart erişimi **AKİS** ile doğrulanmıştır; diğer kart/okuyucu kombinasyonları test edilmemiştir. İmza PIN'inizi hiçbir komuta, issue'ya veya kişiye yazmayın.
+
+> **Güvenlik notu:** Bu paket resmî kurum uygulaması değildir; üçüncü taraf dağıtımıdır. `kur.sh` betiğini çalıştırmadan önce içeriğini inceleyin. DMG sürümü Developer ID ile imzalı ve Apple notarizasyonundan geçmiştir; sürüm notlarında `sha256` bulunur. Ad-hoc imza, notarizasyon değildir.
 
 ## Kimler için?
 
-- **Avukatlar:** e-Devlet üzerinden belge imzalayan ve resmî sorgulama yapanlar.
-- **Mali müşavirler:** Vergi, SGK ve kurum işlemleri için e-imza kullananlar.
-- **Doktorlar ve sağlık profesyonelleri:** e-Devlet ve sağlık işlemlerinde e-imza kullananlar.
-- **Mühendis ve mimarlar:** Proje, ruhsat ve resmî yazışma süreçleri.
-- **Şirket yetkilileri:** MERSİS ve kurum başvuruları için e-imza.
-- **Gümrük müşavirleri, eczacılar, banka/sigorta profesyonelleri:** Resmî işlemlerde e-imza.
-- **Kamu çalışanları ve tüm vatandaşlar:** e-imza kartıyla e-Devlet'e giren herkes.
+Avukatlar, mali müşavirler (SMMM/YMM), doktorlar ve sağlık profesyonelleri, mühendis ve mimarlar, eczacılar, gümrük müşavirleri, şirket yetkilileri (MERSİS), kamu çalışanları, EKAP/ihale kullanıcıları ve e-imza kartı olan tüm Mac kullanıcıları.
 
 ## "Mac'te e-imza çalışmıyor" arayanlar için kısa cevaplar
 
-- **Neden Mac'te sorun çıkıyor?** Uygulama Java Web Start (JNLP) tabanlı dağıtılıyor; Java Web Start Java 11 ve sonrasında kaldırıldı. Bu paket, uygulamayı gömülü Java 11 ile native `.app`'e çevirir ve arm64 kart erişimi için gerekli yamayı uygular.
-- **MacBook / MacBook Pro / MacBook Air / iMac / Mac mini'de çalışır mı?** Evet — Apple Silicon (M1/M2/M3/M4) tüm modeller destekli. Intel Mac desteklenmez.
+- **Neden Mac'te sorun çıkıyor?** Uygulama Java Web Start (JNLP) tabanlı dağıtılıyordu; Java Web Start Java 11 ve sonrasında kaldırıldı. Bu paket, uygulamayı gömülü Java 11 ile native `.app`'e çevirir ve arm64 kart erişimi için gereken yamayı uygular.
+- **MacBook / MacBook Pro / MacBook Air / iMac / Mac mini'de çalışır mı?** Evet — Apple Silicon (M1/M2/M3/M4 ve sonrası) modeller destekli. Intel Mac desteklenmez.
 - **Rosetta veya Java kurmam gerekir mi?** Hayır; paket ARM native (arm64) ve Java uygulamaya gömülüdür.
-- **İmza için ek olarak ne gerekir?** e-imza kartı + kart okuyucu + **arm64 AKİS sürücüsü** (aşağıda).
+- **İmza için ek olarak ne gerekir?** e-imza kartı + kart okuyucu + **arm64 AKİS sürücüsü** (yukarıda).
 - **macOS 28 / Rosetta uyarısı alırsam?** Uyarı e-Devlet uygulamasından değil, eski **Intel** AKİS paketinden (`/Applications/Akia.app`) gelir — çözüm aşağıdaki bölümde.
 
 ## Neden Mac'te çalışmıyordu? Nasıl çözdük?
@@ -30,20 +32,19 @@ e-Devlet E-İmza'yı (Türksat, resmî `elektronik-imza.jar`) **MacBook, MacBook
 
 ## Kurulum (3 yol)
 
-1. **Tek satır (resmî olmayan topluluk betiği; kaynaktan derler):**
-
-```
-curl -fsSL https://raw.githubusercontent.com/adeministratorr/edevlet-eimza-mac-arm64/main/kur.sh | bash
-```
-
-2. **Homebrew (hazır DMG ile en hızlı):**
+1. **Hazır DMG (en hızlı):** [Releases](../../releases) → `EdevletEimza-arm64-*.dmg`; uygulamayı Applications'a sürükleyin.
+2. **Homebrew:**
 
 ```bash
 brew install --cask adeministratorr/tap/edevlet-eimza     # hazır DMG
 brew install adeministratorr/tap/edevlet-eimza            # kaynaktan derler
 ```
 
-3. **Hazır DMG:** [Releases](../../releases) → `EdevletEimza-arm64-*.dmg`
+3. **Tek satır (kaynaktan derler; betiği önce inceleyin):**
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/adeministratorr/edevlet-eimza-mac-arm64/main/kur.sh | bash
+```
 
 Diğer araçlar (aynı tap): [PTT KEP Webmail](https://github.com/adeministratorr/pttkep-eimza-mac-arm64) · [PTT UETS / e-Tebligat](https://github.com/adeministratorr/uets-eimza-mac-arm64) · [TNB Teknoloji İmza](https://github.com/adeministratorr/tnb-eimza-mac-arm64) · [UHAP İmzalama](https://github.com/adeministratorr/uhap-eimza-mac-arm64) · [UDF QuickLook](https://github.com/adeministratorr/udf-quicklook-extension) · [UYAP Doküman Editörü](https://github.com/adeministratorr/ude-mac-arm64-1)
 
