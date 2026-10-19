@@ -1,3 +1,5 @@
+![e-Devlet E-İmza — Apple Silicon Mac istemcisi](assets/social-preview.jpg)
+
 # Mac'tte e-Devlet e-imza kurulumu — Apple Silicon
 
 > **Kısa yanıt:** e-Devlet Kapısı'nda elektronik imzayla giriş yapmak veya belge imzalamak istiyor ancak Mac'inizde imza uygulaması açılmıyor mu? Bu proje, Türksat'ın resmî e-Devlet e-imza istemcisini (`elektronik-imza.jar`) **MacBook, MacBook Pro, MacBook Air, Mac mini ve iMac**'de (Apple Silicon / M serisi / ARM tabanlı işlemci) çalışacak şekilde paketler: gömülü arm64 Java 11, Rosetta veya ayrı Java kurulumu gerekmez. **Gayriresmî bir topluluk çalışmasıdır; e-Devlet Kapısı veya Türksat tarafından hazırlanmış/onaylanmış bir uygulama değildir.**
