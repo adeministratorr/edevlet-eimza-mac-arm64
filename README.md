@@ -1,8 +1,10 @@
-![e-Devlet E-İmza — Apple Silicon Mac istemcisi](assets/social-preview.jpg)
+![Mac’te e-Devlet E-İmza Kurulumu — MacBook ve Apple Silicon](assets/social-preview.jpg)
 
-# Mac'tte e-Devlet e-imza kurulumu — Apple Silicon
+# Mac’te e-Devlet E-İmza Kurulumu — MacBook ve Apple Silicon
 
 > **Kısa yanıt:** e-Devlet Kapısı'nda elektronik imzayla giriş yapmak veya belge imzalamak istiyor ancak Mac'inizde imza uygulaması açılmıyor mu? Bu proje, Türksat'ın resmî e-Devlet e-imza istemcisini (`elektronik-imza.jar`) **MacBook, MacBook Pro, MacBook Air, Mac mini ve iMac**'de (Apple Silicon / M serisi / ARM tabanlı işlemci) çalışacak şekilde paketler: gömülü arm64 Java 11, Rosetta veya ayrı Java kurulumu gerekmez. **Gayriresmî bir topluluk çalışmasıdır; e-Devlet Kapısı veya Türksat tarafından hazırlanmış/onaylanmış bir uygulama değildir.**
+
+**Ayrıntılı Türkçe anlatım:** [Mac’te e-imza ve UYAP kurulumu, ilk kullanım ve hata çözümleri](https://ademyuce.tr/macos-eimza-uyap/).
 
 ## İlk kez kuranlar için
 
@@ -25,6 +27,7 @@ Avukatlar, mali müşavirler (SMMM/YMM), doktorlar ve sağlık profesyonelleri, 
 - **Rosetta veya Java kurmam gerekir mi?** Hayır; paket ARM native (arm64) ve Java uygulamaya gömülüdür.
 - **İmza için ek olarak ne gerekir?** e-imza kartı + kart okuyucu + **arm64 AKİS sürücüsü** (yukarıda).
 - **macOS 28 / Rosetta uyarısı alırsam?** Uyarı e-Devlet uygulamasından değil, eski **Intel** AKİS paketinden (`/Applications/Akia.app`) gelir — çözüm aşağıdaki bölümde.
+- **UYAP için de bu uygulamayı kurmalı mıyım?** Hayır. UYAP Avukat Portalı’nın güncel giriş yöntemi [Adalet E-İmza](https://bedesten.adalet.gov.tr/imza/) veya e-Devlet’tir; UYAP belgesi açmak/düzenlemek için ayrıca UYAP Doküman Editörü gerekir.
 
 ## Neden Mac'te çalışmıyordu? Nasıl çözdük?
 
