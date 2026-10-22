@@ -212,7 +212,7 @@ download() {
 	c_info "elektronik-imza.jar + ikon indiriliyor (codebase: $CODEBASE)…"
 	mkdir -p "$DOWNLOADS" "$BUILD"
 	[ -s "$JAR_FILE" ] && c_ok "Önbellekten: $JAR_FILE ($(du -h "$JAR_FILE" | cut -f1))" \
-		|| { c_info "İndiriliyor: $JAR_URL"; curl -fL --retry 3 -o "$JAR_FILE" "$JAR_URL"; }
+		|| { c_info "İndiriliyor: $JAR_URL"; curl -fL --retry 6 --retry-delay 4 --retry-all-errors -o "$JAR_FILE" "$JAR_URL" || for ALT in ${JAR_URL_FALLBACKS:-}; do curl -fL --retry 4 --retry-delay 4 --retry-all-errors -o "$JAR_FILE" "$ALT" && break; done; }
 	# Doğrula: main-class + gömülü arm64 native kütüphane
 	# (içeriği önce değişkene al; grep -q erken çıkıp pipefail'i tetiklemesin)
 	local mf list
